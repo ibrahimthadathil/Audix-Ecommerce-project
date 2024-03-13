@@ -1,9 +1,10 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <%- include('../layouts/header.ejs') %>
 
 <div class="page-wrapper">
     <%- include('../layouts/navbar.ejs') %>
     <main class="main">
-        <div class="page-header text-center" style="background-image: url('assets/images/new/headset.jpeg');">
+        <div class="page-header text-center" style="background-image: url('/assets/images/new/headset.jpeg');">
             <div class="container">
                 <h1 class="page-title text-white">Category</h1>
             </div><!-- End .container -->
@@ -23,15 +24,16 @@
                 <div class="row">
                     <div class="col-lg-9">
                         
-
+                        
                         <div class="products mb-3">
                             <div class="row justify-content-center">
+                                <% product.forEach(item => { %>
                                 <div class="col-6 col-md-4 col-lg-4">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
                                             <span class="product-label label-new">New</span>
-                                            <a href="product.html">
-                                                <img src="assets/images/new/bose quantum.png" alt="Product image" class="product-image">
+                                            <a href='/productdetails?id=<%=item._id%>' >
+                                                <img src="/product_images/<%= item.image[0]%>" alt="Product image" class="product-image">
                                             </a>
 
                                             <div class="product-action-vertical">
@@ -39,17 +41,17 @@
                                             </div><!-- End .product-action-vertical -->
 
                                             <div class="product-action">
-                                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                <a onclick="addCart('<%=item._id%>')" style="cursor: pointer;" class="btn-product btn-cart"><span>add to cart</span></a>
                                             </div><!-- End .product-action -->
                                         </figure><!-- End .product-media -->
 
                                         <div class="product-body">
                                             <div class="product-cat">
-                                                <a href="#">Women</a>
+                                                <a href="#"><%= item.name%></a>
                                             </div><!-- End .product-cat -->
-                                            <h3 class="product-title"><a href="product.html">Brown paperbag waist pencil skirt</a></h3><!-- End .product-title -->
+                                            <h3 class="product-title"><a href="/products"><%= item.category.name%></a></h3><!-- End .product-title -->
                                             <div class="product-price">
-                                                $60.00
+                                                $<%= item.price%>.00
                                             </div><!-- End .product-price -->
                                             <div class="ratings-container">
                                                 <div class="ratings">
@@ -62,6 +64,8 @@
                                         </div><!-- End .product-body -->
                                     </div><!-- End .product -->
                                 </div><!-- End .col-sm-6 col-lg-4 -->
+                           <% }); %>
+
 
                                 <div class="col-6 col-md-4 col-lg-4">
                                     
@@ -209,16 +213,60 @@
 <!--Connect Mobaile View-->
 
 
-
+<script>
+    function addCart(id){
+        fetch(`/addcart/${id}`,{method:'post'})
+        .then(res => res.json())
+        .then(data =>{
+            if(data.failed){
+                window.location.href = '/login'
+            }else if(data.exist){
+                
+ const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "warning",
+  title: "Already Added"
+});
+            }else if(data.success){
+                
+                const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  }
+});
+Toast.fire({
+  icon: "success",
+  title: "Added TO Cart"
+});
+            }
+        })
+    }
+</script>
 <!-- Plugins JS File -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/jquery.hoverIntent.min.js"></script>
-<script src="assets/js/jquery.waypoints.min.js"></script>
-<script src="assets/js/superfish.min.js"></script>
-<script src="assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/jquery.hoverIntent.min.js"></script>
+<script src="/assets/js/jquery.waypoints.min.js"></script>
+<script src="/assets/js/superfish.min.js"></script>
+<script src="/assets/js/owl.carousel.min.js"></script>
 <!-- Main JS File -->
-<script src="assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
 
 

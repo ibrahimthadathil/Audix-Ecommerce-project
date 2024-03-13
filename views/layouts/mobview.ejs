@@ -13,29 +13,32 @@
         <nav class="mobile-nav">
             <ul class="mobile-menu">
                 <li class="active">
-                    <a href="index.html">Home</a>
+                    <a href="/">Home</a>
 
                     
                 </li>
                 <li>
-                    <a href="/">Category</a>
+                    <a href="/category">Category</a>
                     <ul>
-                        <li><a href="category-list.html">Shop List</a></li>
-                        <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
-                        <li><a href="category.html">Shop Grid 3 Columns</a></li>
+                        
+                        <% listedCategory.forEach(value => { %>
+                                    
+                            <li><a href="/category"><%= value.name%></a></li>
+                            
+                     <%  }); %>
                        
                     </ul>
                 </li>
                 <li>
-                    <a href="product.html" class="sf-with-ul">Product</a>
+                    <a href="/products" class="sf-with-ul">Product</a>
                     
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a href="/contact">Contact</a>
                     
                 </li>
                 <li>
-                    <a href="blog.html">About</a>
+                    <a href="/About">About</a>
 
                     
                         </li>

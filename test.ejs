@@ -1,0 +1,15 @@
+// Load Category (Get Method) :- const loadCategory = async (req, res) => { try
+{ const categoryData = await Category.find({ is_Listed: true }); // Setting
+Catgory :- 
+const productData = await Product.aggregate([ { $match: { status:true, }, }, { $lookup: { from: "categories", localField: "category",
+
+foreignField: "_id", as: "category", }, }, { $unwind: "$category", }, { $match:
+{ 'category.name': req.params.id } } ]); 
+if (req.session.user) {
+res.render("category-1", { login: req.session.user, productData, categoryData
+});
+ } else { 
+  res.render("category-1", { productData, categoryData }); }
+ }
+   catch
+(error) { console.log(error.message); } };

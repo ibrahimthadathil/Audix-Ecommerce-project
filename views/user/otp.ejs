@@ -43,16 +43,27 @@
 											<label for="otp1"><h4>Enter OTP:</h4></label> <br>
 											
 											
-													<span class="message"><%= msg %></span><br>
+													<span id="msg" class="message" hidden><%= msg %></span><br>
 													
                                             <input type="text" name="digit1" id="otp1" class="otp-input" maxlength="1" pattern="[0-9]" onkeyup="moveToNext(this, 'otp2')" required> - 
         									<input type="text" name="digit2" id="otp2" class="otp-input" maxlength="1" pattern="[0-9]" onkeyup="moveToNext(this, 'otp3')" required> - 
 											<input type="text" name="digit3" id="otp3" class="otp-input" maxlength="1" pattern="[0-9]" onkeyup="moveToNext(this, 'otp4')" required> - 
         									<input type="text" name="digit4" id="otp4" class="otp-input" maxlength="1" pattern="[0-9]" required>
 											<input type="email" hidden value="<%=queryemail%>" name="email">
+                                            <% if(locals.token!= null) {%>
+                                                <input type="text" hidden value="<%=token%>"  name="token">
+                                                <% } %>
+
+
 											
 											<br><br>
 											<!-- <p id="timer">Time remaining: <span id="countdown">60</span> seconds</p> -->
+
+                                            <div>
+                                                <p id="timer">
+
+                                                </p>
+                                            </div>
         									
 							    		</div><!-- End .form-group -->
 
@@ -65,11 +76,14 @@
 												
 												
 												<!-- </a> -->
-												<div class="justify-content-center text-warning ">
-													
-													<a href="/resend-Otp?email=<%=queryemail %>" id="resendLink" onclick="alerts()" >Resend OTP</a>
-													
-												</div>
+												<div class="justify-content-center text-warning" id="button-container" style="display: none;">
+                                                    <button class="btn btn-outline-primary-2 text-warning" id="resend-btn"  type="submit">
+                                                        <a href="/resend-otp?email=<%=queryemail%>">
+                                                            Resend OTP
+                                                        </a>
+                                                    </button>
+                                                </div>
+                                                
 												<!-- <div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input" id="signin-remember-2">
 													<label class="custom-control-label" for="signin-remember-2">Remember Me</label> -->
@@ -87,7 +101,9 @@
             	</div><!-- End .container -->
             </div><!-- End .login-page section-bg -->
             
-              
+             <!-- Success Modal -->
+
+ 
 
 
 
@@ -149,35 +165,56 @@
         display: none;
     }
 </style>
+<script>
+   function showAlert() {
+        $('#successModal').modal('show');
+        $('#button-container').hide();
+    }
+</script>
 
-<!-- <script>
+<script>
+    // re-send button showing
+    setTimeout(function() {
+        document.getElementById('button-container').style.display = 'block';
+    }, 60000); 
+</script>
+
+
+<script>
+
     
-    const countdownnumber = document.getElementById('countdown');
-    let countdownValue = 120;
 
-    function updateCountdown() {
-        countdownnumber.textContent = countdownValue;
-        countdownValue--;
+    
+    const time = 60;
 
-        if (countdownValue < 0) {
-            // Disable or hide the Resend OTP link after the countdown reaches 0
-            document.querySelector('a[href="/resend-otp"]').style.display = 'none';
-        } else {
-            setTimeout(updateCountdown, 1000);
-        }
+    
+    function startTimer() {
+        let timeLeft = time;
+        const timerElement = document.getElementById("timer");
+
+        // Update the timer every second
+        const countdown = setInterval(() => {
+            timerElement.textContent = `Resend OTP in ${timeLeft} seconds`
+
+            // Decrease timeLeft by 1 second
+            timeLeft--;
+
+            // If the timer reaches 0, enable the Resend OTP button
+            if (timeLeft < 0) {
+                clearInterval(countdown);
+                document.getElementById("resend-btn").disabled = false;
+                timerElement.textContent = "Resend OTP";
+            }
+        }, 1000);
     }
 
-    // Start the countdown when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        updateCountdown();
-    });
-</script> -->
+    // Function to resend OTP
+   
 
+    // Start the timer when the page loads
+    window.onload = startTimer;
+</script>
 
-
-<script>function alerts(){
-	alert('OTP has been sended to your email')
-}</script>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/jquery.hoverIntent.min.js"></script>
@@ -191,15 +228,66 @@
 
 <script>
 	function moveToNext(current, nextFieldID) {
-		if (current.value.length >= current.maxLength) {
+        if (current.value.length >= current.maxLength) {
 			document.getElementById(nextFieldID).focus();
 		}
 	}
-	document.getElementById("verifyBtn").addEventListener("click", function() {
-            var successBox = document.getElementById("successBox");
-            successBox.style.display = "block";
+
+
+    
+
+	    // document.getElementById("verifyBtn").addEventListener("click", function() {
+
+        //     var successBox = document.getElementById("successBox");
+        //     successBox.style.display = "block";
+        // });
+
+        // verified sweet alert
+
+       const msg= document.getElementById('msg');
+
+       if(msg.textContent=='Invalid OTP...!'){
+
+        Swal.fire({
+            title: 'error',
+            text: 'Invalid OTP...!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        })
+
+       }else if(msg.textContent=='verified successfully'){
+
+        Swal.fire({
+            title: 'Success',
+            text: 'verified successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = '/';
         });
+
+       }else if (msg.textContent=='verified successfully') {
+        
+           Swal.fire({
+               title: 'Success',
+               text: 'Resend otp has been sended into your mail ',
+               icon: 'success',
+               confirmButtonText: 'OK'
+           }).then(() => {
+               window.location.href = '/';
+           });
+       } 
+
+
+       
+       
+
+
 </script>
+
+
+
+
 
 
 

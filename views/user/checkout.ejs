@@ -31,74 +31,123 @@
                             <label for="checkout-discount-input" class="text-truncate">Have a coupon? <span>Click here to enter your code</span></label>
                         </form>
                     </div><!-- End .checkout-discount -->
-                    <form action="#">
+               
                         <div class="row">
                             <div class="col-lg-9">
-                                <h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>First Name *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
+                                <div class="container-fluid px-3 d-flex justify-content-end ">
 
-                                        <div class="col-sm-6">
-                                            <label>Last Name *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
+                                    <button type="button" class="btn btn-primary mb-3 " data-bs-toggle="modal" data-bs-target="#address" data-bs-whatever="@mdo">Add Address</button>
 
-                                    <label>Company Name (Optional)</label>
-                                    <input type="text" class="form-control">
+                                      <!-- Modal For Address Add-->
 
-                                    <label>Country *</label>
-                                    <input type="text" class="form-control" required>
+                                      <div class="modal fade" id="address" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">   <!-- Add Addres Modal -->
 
-                                    <label>Street address *</label>
-                                    <input type="text" class="form-control" placeholder="House number and Street name" required>
-                                    <input type="text" class="form-control" placeholder="Appartments, suite, unit etc ..." required>
+                                        <div class="modal-dialog">
+                                          <div class="modal-content">
 
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>Town / City *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
+                                            <div class="modal-header">
+                                              <h6 class="modal-title " id="exampleModalLabel">Add Address</h6>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
 
-                                        <div class="col-sm-6">
-                                            <label>State / County *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
+                                            <div class="modal-body px-4">
 
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <label>Postcode / ZIP *</label>
-                                            <input type="text" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
+                                              <form method="post" style="padding-left: 25px;padding-right: 15px;" id="addform">
 
-                                        <div class="col-sm-6">
-                                            <label>Phone *</label>
-                                            <input type="tel" class="form-control" required>
-                                        </div><!-- End .col-sm-6 -->
-                                    </div><!-- End .row -->
+                                                  <div class="mb-3">
+                                                      <label for="address" class="col-form-label text-black">Address :</label>
+                                                      <input type="text" class="form-control" name="address"  id="address" placeholder="Enter your Address">
+                                                      <div class="h-25"><p class="text-danger " id="errAD"></p></div>
+                                                  </div>
+                                                  
+                                                  <div class="mb-3">
+                                                      <label for="city" class="col-form-label text-black">City :</label>
+                                                      <input type="text" class="form-control" name="city" id="city" placeholder="Enter your City Name">
+                                                      <div class="h-25"><p id="cityError"></p></div>
+                                                  </div>
+                                                  
+                                                  <div class="mb-3">
+                                                      <label for="state" class="col-form-label text-black">State :</label>
+                                                      <input type="text" class="form-control" name="state" id="state" placeholder="Enter your State">
+                                                      <div class="h-25"><p id="stateError"></p></div>
+                                                  </div>
+                                                  
+                                                  <div class="mb-3 d-flex">
+                                                      <div>
+                                                          <label for="pincode" class="col-form-label text-black">Pincode :</label>
+                                                          <input type="text" class="form-control w-75" name="pincode" id="pincode" placeholder="Pincode">
+                                                          <div class="h-25"><p id="pincodeError"></p></div>
+                                                      </div>
+                                                      <div>
+                                                          <label for="pincode" class="col-form-label text-black">Phone :</label>
+                                                          <input type="text" class="form-control w-100" name="phone" id="phone" placeholder="Phone number">
+                                                          <div class="h-25"><p id="phoneError"></p></div>
+                                                      </div>
+                                                  </div>
+                                                  
+                                                  
+                                              </form>
+                                              
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary"   onclick="addAddress('<%= userdata._id %>')">Add</button>
+                                              </div>
+                                            
+                                            </div>
+                                            <!--row End-->
 
-                                    <label>Email address *</label>
-                                    <input type="email" class="form-control" required>
 
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="checkout-create-acc">
-                                        <label class="custom-control-label" for="checkout-create-acc">Create an account?</label>
-                                    </div><!-- End .custom-checkbox -->
+                                          </div>
+                                          
+                                        </div>
+                                                
+                                      </div>
+                                        
+                                  </div>
+                                  <div class="row  ">
+                                    <% if(addressList!==null &&  addressList.addresss.length!==0) { %>
 
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="checkout-diff-address">
-                                        <label class="custom-control-label" for="checkout-diff-address">Ship to a different address?</label>
-                                    </div><!-- End .custom-checkbox -->
+                                     <% for(let i=0; i<addressList.addresss.length;i++){ %>
+                                        <div class="col-lg-6">
 
-                                    <label>Order notes (optional)</label>
-                                    <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                            <div class="card card-dashboard">
+
+                                                
+                                                <div class="card-body">
+                                                    
+                                                    <button type="button" class="close" aria-label="Close" onclick="deleteAddress('<%= userdata._id %>','<%= addressList.addresss[i]._id %>')" style="font-size: 25px;padding-bottom: 20px;">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                    <h3 class="card-title">Address</h3><!-- End .card-title -->
+
+                                                    <p><%= addressList.addresss[i].userName %><br>
+                                                    <%= addressList.addresss[i].name %><br>
+                                                    <%= addressList.addresss[i].city%><br>
+                                                    <%= addressList.addresss[i].state %><br>
+                                                    <%= addressList.addresss[i].pincode %><br>
+                                                    <%= addressList.addresss[i].phone %><br>
+                                                    <a href="#">Edit <i class="icon-edit"></i></a></p>
+                 
+                                                 </div><!-- End .card-body -->
+
+                                            </div><!-- End .card-dashboard -->
+
+                                        </div><!-- End .col-lg-6 -->
+
+                                        
+                                    
+                               <% } %>
+                               <% }else if(addressList==null || addressList.addresss.length==0){ %>
+
+
+                                <div class="text-center"><p class="text-black  py-5 ">click The Add Address Button to add Address...!</p></div>
+                                
+                                
+                                <% } %>
+                                </div>
                             </div><!-- End .col-lg-9 -->
                             <aside class="col-lg-3">
-                                <div class="summary">
+                                <div class="summary bg-white ">
                                     <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 
                                     <table class="table table-summary">
@@ -217,7 +266,7 @@
                                 </div><!-- End .summary -->
                             </aside><!-- End .col-lg-3 -->
                         </div><!-- End .row -->
-                    </form>
+                  
                 </div><!-- End .container -->
             </div><!-- End .checkout -->
         </div><!-- End .page-content -->
@@ -237,7 +286,66 @@
 
 <%- include('../layouts/mobview.ejs') %>
 
+<script>
+        // add address
+    function addAddress(id){
 
+        const form = document.getElementById('addform')
+        console.log(form);
+        const formdata = new FormData(form)
+        const address = {}
+        formdata.forEach((val,i)=>{
+            address[i]=val
+    })
+
+    // console.log(address);
+    
+
+    fetch(`/checkoutAdd?id=${id}`,{method:"post",headers: {'Content-Type' : 'application/json'},body:JSON.stringify({address})
+
+}).then(res => res.json()
+    .then(data => {
+        if(data.success){
+            
+            Swal.fire({
+                title:'Address Added',
+                text:'Address Added Successfully',
+                icon:'success',
+                confirmButtonText: 'OK'
+ 
+    })
+    .then((result) => {
+        
+     window.location.href = '/checkout'
+     
+    })
+    }else{
+        Swal.fire({
+            title:'Failed',
+            text:'Address Adding failed',
+            icon:'error',
+            confirmButtonText: 'OK'
+            
+        }).then((result) => {
+            
+            window.location.href = '/checkout'
+            
+        })
+    }
+}))
+
+
+}
+// delete data 
+function deleteAddress(id,addrs){
+
+fetch(`/deleteAddress?id=${id}&&address=${addrs}`,{ method:'post'})
+.then(data =>{
+    window.location.href = '/checkout'
+})
+}
+
+</script>
 
 
 <script src="assets/js/jquery.min.js"></script>

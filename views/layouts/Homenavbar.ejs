@@ -12,7 +12,7 @@
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
                         <a href="/" class="logo">
-                            <img src="assets/images/new/icons8-J.png" alt="Audix Logo" width="70" height="18" style="padding-right: 20px;">
+                            <img src="/assets/images/new/icons8-J.png" alt="Audix Logo" width="70" height="18" style="padding-right: 20px;">
                         </a>
                         <li class="megamenu-container active">
                             <a href="/" style="padding-right: 10px;">Home</a>
@@ -23,11 +23,16 @@
                             <a href="/category" class="sf-with-ul">Category &nbsp; &nbsp;</a>
                             
                             <ul style=" padding-right: 0; "> 
-                                <li><a href="/category">EAR BUDS</a></li>
-                                <li><a href="/category">WIRELESS OVERHEAD</a></li>
-                                <li><a href="/category">WIRED & IN EAR</a></li>
-                                <li><a href="/category">GAMING & AVIATOIN </a></li>
+                           
+                                <% listedCategory.forEach(value => { %>
+                                    
+                                    <li><a href="/category/<%= value.name %>"><%= value.name%></a></li>
+                                    
+                             <%  }); %>
+
                             </ul>
+
+                                
 
                           
                         </li>
@@ -57,27 +62,32 @@
                 <ul>
                     <li>
                         <br>
-                        <a class="" href="<%= locals.login ? '/profile' : '/login' %>" style="padding-right: 20px;color: #a5620c;">
-                            <% if (locals.login) { %>
-                                <div class="user-icon-container mt-2 ">
-                                    <img style="width: 40%;" src="assets/images/new/user.png" alt="User" class="user-icon">
-                                    <div class="user-options p-4">
-                                        <a href="" style="padding-right: 20px;">Profile</a>
-                                        <form action="/logout" method="post">
+                       <!-- 
+    This is a HTML template with embedded JavaScript logic (using EJS syntax).
+    It seems to be part of a web application, specifically a navigation bar or user menu.
+-->
 
-                                            <button class="logout-button rounded-pill mt-1 text-white" type="submit" style="background-color: rgb(110, 95, 11);padding-left: 18px;">Logout</button>
-                                        </form>
-                                        </div>
-                                        
-                                       
-                                </div>
-                            <% } else { %>
-                                Login
-                            <% } %>
-                        </a>
+<a class="" href="<%= locals.login ? '/profile' : '/login' %>" style="padding-right: 20px;color: #a5620c;">
+    <% if (locals.login) { %>
+ 
+        <div class="user-icon-container mt-2">
+            
+            <img style="width: 40%;" src="assets/images/new/user.png" alt="User" class="user-icon  ">
+
+        </div>
+        
+    <% } else { %>
+        <!-- If the user is not logged in, display "Login" -->
+        Login
+    <% } %>
+</a>
+
                     </li>
                 </ul>
                 
+               
+    
+                  
 
 
                 <div class="header-search header-search-extended header-search-visible">
@@ -93,70 +103,17 @@
                     </form>
                 </div><!-- End .header-search -->
                 
-                <a href="wishlist.html" class="wishlist-link">
+                <a href="/wishlist" class="wishlist-link">
                     <i class="icon-heart-o"></i>
                 </a>
 
                 <div class="dropdown cart-dropdown">
-                    <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                    <a href="/cart" class="dropdown-toggle" role="button"  aria-expanded="false" data-display="static">
                         <i class="icon-shopping-cart"></i>
                         <span class="cart-count">2</span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div class="dropdown-cart-products">
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">Beige knitted elastic runner shoes</a>
-                                    </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $84.00
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="assets/images/products/cart/product-1" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="product.html">Blue utility pinafore denim dress</a>
-                                    </h4>
-
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">1</span>
-                                        x $76.00
-                                    </span>
-                                </div><!-- End .product-cart-details -->
-
-                                <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
-                                        <img src="assets/images/products/cart/product-2.jpg" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-                        </div><!-- End .cart-product -->
-
-                        <div class="dropdown-cart-total">
-                            <span>Total</span>
-
-                            <span class="cart-total-price">$160.00</span>
-                        </div><!-- End .dropdown-cart-total -->
-
-                        <div class="dropdown-cart-action">
-                            <a href="/cart" class="btn btn-primary">View Cart</a>
-                            <a href="/checkout" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                        </div><!-- End .dropdown-cart-total -->
-                    </div><!-- End .dropdown-menu -->
+                    <!-- End .dropdown-menu -->
                 </div><!-- End .cart-dropdown -->
             </div><!-- End .header-right -->
         </div><!-- End .container-fluid -->

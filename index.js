@@ -46,28 +46,7 @@ app.use('/',userroute)
 const adminroutes = require ('./routers/admin_routers')
 
 app.use('/admin',adminroutes)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 const PORT = process.env.PORT || 4000
 
 app.listen(PORT,()=>{
